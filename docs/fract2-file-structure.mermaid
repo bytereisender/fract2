@@ -1,0 +1,144 @@
+graph TD
+subgraph Entwicklung [fract2-installer/dev 755]
+    A[dev 755]:::directory --> A1[system 755]:::directory
+    A --> A2[packages 755]:::directory
+    A --> A3[templates 755]:::directory
+    A --> A4[config 750]:::directory
+    A --> A5(index.php 644):::finished
+    A --> A6(README.md 644):::finished
+    A --> A7[docs 755]:::directory
+
+    A1 --> A1A[core 755]:::directory
+    A1A --> A1A1[database 755]:::directory
+    A1A1 --> A1A1A[postgres 755]:::directory
+    A1A1 --> A1A1B[mariadb 755]:::directory
+    A1A1A --> A1A1A1(PostgresConnection.php 644):::finished
+    A1A1A --> A1A1A2(PostgresQuery.php 644):::finished
+    A1A1B --> A1A1B1(MariaDBConnection.php 644):::finished
+    A1A1B --> A1A1B2(MariaDBQuery.php 644):::finished
+
+    A1 --> A1B[bootstrap 755]:::directory
+    A1B --> A1B1(TarStreamWrapper.php 644):::finished
+    A1B --> A1B2(Cache.php 644):::finished
+    A1B --> A1B3(Logger.php 644):::finished
+
+    A2 --> A2A[f2.atom 755]:::directory
+    A2 --> A2B[f2.users 755]:::directory
+    A2 --> A2C[f2.content 755]:::directory
+
+    A3 --> A3A[pages 755]:::directory
+    A3 --> A3B[entities 755]:::directory
+    A3 --> A3C[fractals 755]:::directory
+    A3 --> A3D(index.twig 644):::finished
+
+    A4 --> A4A(config.yaml 640):::finished
+    A4 --> A4B(database.yaml 640):::finished
+
+    A7 --> A7A(architecture_overview.md 644):::finished
+    A7 --> A7B(database_design.md 644):::finished
+    A7 --> A7C(installation_process.md 644):::finished
+    A7 --> A7D(package_structure.md 644):::finished
+    A7 --> A7E(security_considerations.md 644):::finished
+    A7 --> A7F(fract2_file_structure.md 644):::finished
+end
+
+S1(fract2-dist-packager.sh 755):::script
+
+subgraph Distribution [fract2-installer/dist 755]
+    B[dist 755]:::directory --> B1[system 755]:::directory
+    B --> B2[packages 755]:::directory
+    B --> B3[templates 755]:::directory
+    B --> B4[config 750]:::directory
+    B --> B5(index.php 644):::finished
+    B --> B6(README.md 644):::finished
+    B --> B7[docs 755]:::directory
+
+    B1 --> B1A(core.tar 644):::archive
+    B1 --> B1B[bootstrap 755]:::directory
+    B1B --> B1B1(TarStreamWrapper.php 644):::finished
+    B1B --> B1B2(Cache.php 644):::finished
+    B1B --> B1B3(Logger.php 644):::finished
+
+    B2 --> B2A(f2.atom.tar 644):::archive
+    B2 --> B2B(f2.users.tar 644):::archive
+    B2 --> B2C(f2.content.tar 644):::archive
+
+    B3 --> B3A[pages 755]:::directory
+    B3 --> B3B[entities 755]:::directory
+    B3 --> B3C[fractals 755]:::directory
+    B3 --> B3D(index.twig 644):::finished
+
+    B4 --> B4A(config.yaml 640):::finished
+    B4 --> B4B(database.yaml 640):::finished
+
+    B7 --> B7A(architecture_overview.md 644):::finished
+    B7 --> B7B(database_design.md 644):::finished
+    B7 --> B7C(installation_process.md 644):::finished
+    B7 --> B7D(package_structure.md 644):::finished
+    B7 --> B7E(security_considerations.md 644):::finished
+    B7 --> B7F(fract2_file_structure.md 644):::finished
+
+    B1A -.- B1A1[Inhalt von core.tar]
+    B1A1 --> B1A1A[database]:::directory
+    B1A1A --> B1A1A1[postgres]:::directory
+    B1A1A --> B1A1A2[mariadb]:::directory
+    B1A1A1 --> B1A1A1A(PostgresConnection.php):::finished
+    B1A1A1 --> B1A1A1B(PostgresQuery.php):::finished
+    B1A1A2 --> B1A1A2A(MariaDBConnection.php):::finished
+    B1A1A2 --> B1A1A2B(MariaDBQuery.php):::finished
+end
+
+S2(fract2-install.sh 755):::script
+
+subgraph Installation [fract2 755]
+    C[fract2 755]:::directory --> C1[system 755]:::directory
+    C --> C2[packages 755]:::directory
+    C --> C3[templates 755]:::directory
+    C --> C4[config 750]:::directory
+    C --> C5(index.php 644):::finished
+    C --> C6(README.md 644):::finished
+    C --> C7[docs 755]:::directory
+
+    C1 --> C1A[core 755]:::directory
+    C1A --> C1A1[database 755]:::directory
+    C1A1 --> C1A1A[postgres 755]:::directory
+    C1A1 --> C1A1B[mariadb 755]:::directory
+    C1A1A --> C1A1A1(PostgresConnection.php 644):::finished
+    C1A1A --> C1A1A2(PostgresQuery.php 644):::finished
+    C1A1B --> C1A1B1(MariaDBConnection.php 644):::finished
+    C1A1B --> C1A1B2(MariaDBQuery.php 644):::finished
+
+    C1 --> C1B[bootstrap 755]:::directory
+    C1B --> C1B1(TarStreamWrapper.php 644):::finished
+    C1B --> C1B2(Cache.php 644):::finished
+    C1B --> C1B3(Logger.php 644):::finished
+
+    C2 --> C2A[f2.atom 755]:::directory
+    C2 --> C2B[f2.users 755]:::directory
+    C2 --> C2C[f2.content 755]:::directory
+
+    C3 --> C3A[pages 755]:::directory
+    C3 --> C3B[entities 755]:::directory
+    C3 --> C3C[fractals 755]:::directory
+    C3 --> C3D(index.twig 644):::finished
+
+    C4 --> C4A(config.yaml 640):::finished
+    C4 --> C4B(database.yaml 640):::finished
+
+    C7 --> C7A(architecture_overview.md 644):::finished
+    C7 --> C7B(database_design.md 644):::finished
+    C7 --> C7C(installation_process.md 644):::finished
+    C7 --> C7D(package_structure.md 644):::finished
+    C7 --> C7E(security_considerations.md 644):::finished
+    C7 --> C7F(fract2_file_structure.md 644):::finished
+end
+
+A --> S1
+S1 --> B
+B --> S2
+S2 --> C
+
+classDef finished stroke:#90EE90,stroke-width:4px;
+classDef directory stroke:#FFFF00,stroke-width:4px;
+classDef archive stroke:#FFA500,stroke-width:4px;
+classDef script fill:#FFA07A,stroke:#333,stroke-width:2px;

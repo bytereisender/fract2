@@ -1,0 +1,64 @@
+# fract2/config/database.yaml
+postgresql:
+  host: localhost
+  port: 5432
+  database: fract2_db
+  user: fract2_user
+  password: secure_password
+  
+  # Performance-Optimierungen
+  config:
+	shared_buffers: 256MB
+	work_mem: 16MB
+	maintenance_work_mem: 128MB
+	effective_cache_size: 1GB
+	max_connections: 100
+	
+  # Connection Pooling mit PgBouncer
+  pgbouncer:
+	enabled: true
+	max_client_conn: 1000
+	default_pool_size: 20
+
+mariadb:
+  host: localhost
+  port: 3306
+  database: fract2_db
+  user: fract2_user
+  password: secure_password
+  
+  # Performance-Optimierungen
+  config:
+	innodb_buffer_pool_size: 256M
+	innodb_log_file_size: 64M
+	innodb_flush_log_at_trx_commit: 2
+	query_cache_size: 64M
+	max_connections: 100
+	
+  # Connection Pooling mit ProxySQL
+  proxysql:
+	enabled: true
+	max_connections: 1000
+	default_pool_size: 20
+
+# CMS-spezifische Konfiguration
+cms:
+  default_db: postgresql  # oder mariadb
+  table_prefix: f2_
+  default_charset: utf8mb4
+  default_collation: utf8mb4_unicode_ci
+  
+  # Verbindungseinstellungen
+  connection:
+	persistent: true
+	timeout: 5
+	
+  # Query Cache
+  query_cache:
+	enabled: true
+	size: 64M
+	
+  # Migrationen
+  migrations:
+	table: f2_migrations
+	auto_run: true
