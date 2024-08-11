@@ -22,9 +22,9 @@ paketname/
 ├── config/
 │   └── config.yaml
 ├── src/
-│   ├── Controllers/
-│   ├── Models/
-│   └── Views/
+│   ├── Functions/
+│   ├── Handlers/
+│   └── Services/
 ├── templates/
 ├── assets/
 │   ├── css/
@@ -37,6 +37,9 @@ paketname/
 
 - `config/`: Enthält paketspezifische Konfigurationen
 - `src/`: Enthält den PHP-Quellcode des Pakets
+  - `Functions/`: Enthält funktionale Komponenten
+  - `Handlers/`: Enthält Request-Handler
+  - `Services/`: Enthält Dienste und Hilfsfunktionen
 - `templates/`: TWIG-Templates für die Ausgabe
 - `assets/`: Statische Ressourcen wie CSS, JavaScript und Bilder
 - `migrations/`: Datenbankmigrationen für das Paket
@@ -88,7 +91,7 @@ Das Paketmanagement-System löst Abhängigkeiten automatisch auf und stellt sich
 ## Besten Praktiken
 
 1. Halten Sie Pakete so klein und fokussiert wie möglich
-2. Verwenden Sie Dependency Injection für lose Kopplung
+2. Verwenden Sie funktionale Programmierung, wo es sinnvoll ist
 3. Folgen Sie den Fract2 Coding Standards
 4. Dokumentieren Sie öffentliche APIs gründlich
 5. Schreiben Sie umfassende Tests für Ihre Pakete

@@ -3,15 +3,15 @@
 ## Inhaltsverzeichnis
 1. [Überblick](#überblick)
 2. [Systemanforderungen](#systemanforderungen)
-3. [Vorbereitungen](#vorbereitungen)
+3. [Vorbereitung](#vorbereitung)
 4. [Installationsschritte](#installationsschritte)
-5. [Konfiguration nach der Installation](#konfiguration-nach-der-installation)
-6. [Fehlerbehebung](#fehlerbehebung)
-7. [Aktualisierungsprozess](#aktualisierungsprozess)
+5. [Zusätzliche Funktionen](#zusätzliche-funktionen)
+6. [Konfiguration nach der Installation](#konfiguration-nach-der-installation)
+7. [Fehlerbehebung](#fehlerbehebung)
 
 ## Überblick
 
-Der Installationsprozess von Fract2 CMS wurde entwickelt, um eine einfache und reibungslose Einrichtung zu gewährleisten. Das System nutzt ein spezielles Installationsskript, das den Benutzer durch den gesamten Prozess führt.
+Der Installationsprozess von Fract2 CMS wurde entwickelt, um eine einfache und reibungslose Einrichtung zu gewährleisten. Das System nutzt ein spezielles Installationsskript (`fract2-setup.sh`) und ein komprimiertes Distributionspaket (`distribution.tar`) für den gesamten Prozess.
 
 ## Systemanforderungen
 
@@ -20,42 +20,44 @@ Der Installationsprozess von Fract2 CMS wurde entwickelt, um eine einfache und r
 - Apache 2.4+ oder Nginx 1.18+
 - Mindestens 64 MB RAM für PHP
 - 100 MB freier Festplattenspeicher
+- (Optional) Composer
+- (Optional) Git
 
-## Vorbereitungen
+## Vorbereitung
 
-1. Laden Sie das Fract2 CMS-Installationspaket herunter.
-2. Entpacken Sie das Archiv in das gewünschte Verzeichnis auf Ihrem Webserver.
-3. Stellen Sie sicher, dass das Webserver-Benutzerkotnto Schreibrechte für das Installationsverzeichnis hat.
+1. Kopieren Sie `fract2-setup.sh` und `distribution.tar` in das gewünschte Verzeichnis auf Ihrem Server.
+2. Stellen Sie sicher, dass Sie Ausführungsrechte für `fract2-setup.sh` haben.
 
 ## Installationsschritte
 
-1. Öffnen Sie ein Terminal und navigieren Sie zum Installationsverzeichnis.
+1. Öffnen Sie ein Terminal und navigieren Sie zum Verzeichnis, das `fract2-setup.sh` enthält.
 
 2. Führen Sie das Installationsskript aus:
    ```
-   ./fract2-install.sh
+   ./fract2-setup.sh
    ```
 
-3. Folgen Sie den Anweisungen des Skripts:
-   - Wählen Sie das zu verwendende Datenbanksystem (PostgreSQL oder MariaDB)
-   - Geben Sie die Datenbankverbindungsdaten ein
-   - Wählen Sie den Installationsmodus (Standard oder Erweitert)
-   - Konfigurieren Sie den Admin-Benutzer
+3. Das Skript führt folgende Aktionen aus:
+   - Erkennung des Betriebssystems
+   - Extraktion der Dateien aus `distribution.tar` in ein neues Verzeichnis `fract2`
+   - Anzeige des Fortschritts mit farbiger Ausgabe
 
-4. Das Skript führt folgende Aktionen aus:
-   - Überprüfung der Systemanforderungen
-   - Erstellung der Datenbankstruktur
-   - Kopieren der Fract2-Dateien an den richtigen Ort
-   - Generierung der Konfigurationsdateien
-   - Einrichtung des Admin-Benutzers
+4. Folgen Sie den Anweisungen auf dem Bildschirm.
 
-5. Nach Abschluss der Installation erhalten Sie eine Zusammenfassung und weitere Anweisungen.
+## Zusätzliche Funktionen
+
+### Composer-Initialisierung
+Wenn Composer auf Ihrem System verfügbar ist, wird das Skript automatisch die Abhängigkeiten installieren. Falls nicht, erhalten Sie eine Benachrichtigung mit Anweisungen zur manuellen Installation.
+
+### Git-Repository-Initialisierung
+Das Skript bietet die Option, ein Git-Repository für Ihre Fract2-Installation zu initialisieren. Sie werden gefragt, ob Sie dies möchten.
 
 ## Konfiguration nach der Installation
 
-1. Öffnen Sie die Datei `config/config.yaml` und passen Sie die Einstellungen nach Bedarf an.
-2. Konfigurieren Sie Ihren Webserver, um auf das Fract2-Installationsverzeichnis zu zeigen.
-3. Setzen Sie die entsprechenden Berechtigungen für Verzeichnisse und Dateien:
+1. Navigieren Sie zum neu erstellten `fract2`-Verzeichnis.
+2. Öffnen Sie die Datei `config/config.yaml` und passen Sie die Einstellungen nach Bedarf an.
+3. Konfigurieren Sie Ihren Webserver, um auf das Fract2-Installationsverzeichnis zu zeigen.
+4. Setzen Sie die entsprechenden Berechtigungen für Verzeichnisse und Dateien:
    ```
    chmod 755 /pfad/zu/fract2
    chmod 750 /pfad/zu/fract2/config
@@ -64,18 +66,9 @@ Der Installationsprozess von Fract2 CMS wurde entwickelt, um eine einfache und r
 
 ## Fehlerbehebung
 
-- **Datenbankkonnektivitätsprobleme**: Überprüfen Sie die Verbindungsdaten in `config/database.yaml`.
-- **Berechtigungsfehler**: Stellen Sie sicher, dass der Webserver-Benutzer die notwendigen Schreibrechte hat.
-- **Fehlende PHP-Erweiterungen**: Installieren Sie fehlende Erweiterungen über Ihren Paketmanager.
+- **Extraktionsprobleme**: Stellen Sie sicher, dass Sie Schreibrechte im Zielverzeichnis haben.
+- **Composer-Fehler**: Überprüfen Sie Ihre Composer-Installation und führen Sie `composer install` manuell im Fract2-Verzeichnis aus.
+- **Git-Initialisierungsfehler**: Stellen Sie sicher, dass Git korrekt installiert ist und Sie die notwendigen Berechtigungen haben.
+- **Berechtigungsfehler**: Überprüfen Sie die Dateiberechtigungen und den Besitzer des Webserver-Prozesses.
 
-## Aktualisierungsprozess
-
-1. Sichern Sie Ihre aktuelle Fract2-Installation und Datenbank.
-2. Laden Sie das neue Fract2-Updatepaket herunter.
-3. Führen Sie das Update-Skript aus:
-   ```
-   ./fract2-update.sh
-   ```
-4. Folgen Sie den Anweisungen des Skripts, um die Aktualisierung abzuschließen.
-
-Für detaillierte Informationen zu spezifischen Versionsupgrades, konsultieren Sie bitte die Upgrade-Dokumentation der jeweiligen Version.
+Bei anhaltenden Problemen konsultieren Sie bitte die ausführliche Dokumentation oder wenden Sie sich an den Support.

@@ -2,200 +2,182 @@
 
 ## Inhaltsverzeichnis
 1. [Überblick](#überblick)
-2. [Hauptverzeichnisstruktur](#hauptverzeichnisstruktur)
-3. [Detaillierte Strukturbeschreibung](#detaillierte-strukturbeschreibung)
-4. [Entwicklungsumgebung (dev)](#entwicklungsumgebung-dev)
-5. [Distributionspaket (dist)](#distributionspaket-dist)
-6. [Installierte Struktur](#installierte-struktur)
-7. [Wichtige Dateien](#wichtige-dateien)
-8. [Visualisierung der Struktur](#visualisierung-der-struktur)
+2. [Entwicklungsstruktur](#entwicklungsstruktur)
+3. [Distributionsstruktur](#distributionsstruktur)
+4. [Setup-Struktur](#setup-struktur)
+5. [Wichtige Dateien](#wichtige-dateien)
+6. [Visualisierung der Struktur](#visualisierung-der-struktur)
 
 ## Überblick
 
-Die Dateistruktur von Fract2 CMS ist so konzipiert, dass sie eine klare Trennung zwischen Entwicklung, Distribution und Installation ermöglicht. Dies fördert eine effiziente Entwicklung und erleichtert den Deployment-Prozess.
+Die Dateistruktur von Fract2 CMS ist in drei Hauptbereiche unterteilt: Entwicklung, Distribution und Setup. Diese Struktur ermöglicht eine effiziente Entwicklung, einfache Distribution und unkomplizierte Installation des CMS.
 
-## Hauptverzeichnisstruktur
-
-```
-fract2-installer/
-├── dev/
-├── dist/
-├── workbench/
-├── fract2-install.sh
-└── fract2-dist-packager.sh
-```
-
-## Detaillierte Strukturbeschreibung
-
-### Entwicklungsumgebung (dev)
-
-Die `dev`-Umgebung enthält alle Quelldateien und ist für die aktive Entwicklung vorgesehen.
+## Entwicklungsstruktur
 
 ```
-dev/
-├── system/
-│   ├── core/
-│   │   └── database/
-│   │       ├── postgres/
-│   │       └── mariadb/
-│   └── bootstrap/
-├── packages/
-│   ├── f2.atom/
-│   ├── f2.users/
-│   └── f2.content/
-├── templates/
-│   ├── pages/
-│   ├── entities/
-│   └── fractals/
+fract2-development/
 ├── config/
+│   ├── config.yaml
+│   └── database.yaml
 ├── docs/
-├── index.php
-└── README.md
-```
-
-### Distributionspaket (dist)
-
-Das `dist`-Verzeichnis enthält die für die Distribution vorbereiteten Dateien, einschließlich komprimierter Archive.
-
-```
-dist/
+│   ├── architecture_overview.md
+│   ├── database_design.md
+│   ├── fract2-file-structure.mermaid
+│   ├── fract2_file_structure.md
+│   ├── installation_process.md
+│   ├── package_structure.md
+│   └── security_considerations.md
+├── packages/
+│   ├── f2.atom.tar/
+│   ├── f2.content.tar/
+│   └── f2.users.tar/
 ├── system/
 │   ├── bootstrap/
-│   └── core.tar
-├── packages/
-│   ├── f2.atom.tar
-│   ├── f2.users.tar
-│   └── f2.content.tar
+│   │   └── tarStreamWrapper.php
+│   └── core.tar/
+│       └── database/
+│           ├── mariadb/
+│           │   ├── MariaDBConnection.php
+│           │   └── MariaDBQuery.php
+│           └── postgres/
+│               ├── PostgresConnection.php
+│               └── PostgresQuery.php
 ├── templates/
-├── config/
-├── docs/
-├── index.php
-└── README.md
+│   └── index.twig
+├── LICENSE.md
+├── README.md
+├── fract2-dist-packager.sh
+└── index.php
 ```
 
-### Installierte Struktur
+## Distributionsstruktur
 
-Nach der Installation sieht die Struktur wie folgt aus:
+Während des Distributionsprozesses wird eine temporäre Struktur neben der `fract2-setup.sh` erstellt:
+
+```
+fract2-development/distribution/
+├── config/
+├── packages/
+├── system/
+│   └── bootstrap/
+├── templates/
+├── distribution.tar
+└── fract2-setup.sh
+```
+
+Nach Abschluss des Prozesses werden alle temporären Inhalte wieder entfernt. Das Distributionsverzeichnis enthält dann nur noch:
+
+```
+fract2-development/distribution/
+└── fract2-setup.sh
+```
+
+## Setup-Struktur
+
+Das finale Setup-Paket wird in einem separaten Verzeichnis erstellt:
+
+```
+fract2-setup/
+├── distribution.tar
+└── fract2-setup.sh
+```
+
+## Installierte Struktur
+
+Nach der Ausführung von `fract2-setup.sh` wird folgende Struktur erstellt:
 
 ```
 fract2/
-├── system/
-│   ├── core/
-│   │   └── database/
-│   │       ├── postgres/
-│   │       └── mariadb/
-│   └── bootstrap/
-├── packages/
-│   ├── f2.atom/
-│   ├── f2.users/
-│   └── f2.content/
-├── templates/
-│   ├── pages/
-│   ├── entities/
-│   └── fractals/
 ├── config/
+│   ├── config.yaml
+│   └── database.yaml
 ├── docs/
-├── index.php
-└── README.md
+│   ├── architecture_overview.md
+│   ├── database_design.md
+│   ├── fract2-file-structure.mermaid
+│   ├── fract2_file_structure.md
+│   ├── installation_process.md
+│   ├── package_structure.md
+│   └── security_considerations.md
+├── packages/
+│   ├── f2.atom.tar
+│   ├── f2.content.tar
+│   └── f2.users.tar
+├── system/
+│   ├── bootstrap/
+│   │   └── tarStreamWrapper.php
+│   └── core.tar
+├── templates/
+│   └── index.twig
+├── vendor/  # Wenn Composer verwendet wurde
+├── .git/    # Wenn Git-Initialisierung gewählt wurde
+├── LICENSE.md
+├── README.md
+└── index.php
 ```
 
 ## Wichtige Dateien
 
-- `fract2-install.sh`: Skript zur Installation des CMS
-- `fract2-dist-packager.sh`: Skript zur Erstellung des Distributionspakets
+- `LICENSE.md`: BSD 3-Clause Lizenz des Projekts
+- `README.md`: Projektübersicht und Dokumentation
+- `fract2-dist-packager.sh`: Skript zum Erstellen des Distributionspakets
 - `index.php`: Haupteinstiegspunkt der Anwendung
-- `config/config.yaml`: Hauptkonfigurationsdatei
-- `config/database.yaml`: Datenbankkonfigurationsdatei
+- `distribution.tar`: Komprimiertes Paket aller Distributionsdateien
+- `fract2-setup.sh`: Installationsskript für das CMS
 
 ## Visualisierung der Struktur
 
-Hier ist eine visuelle Darstellung der Fract2 CMS-Struktur:
-
 ```mermaid
 graph TD
-	subgraph Entwicklung [fract2-installer/dev 755]
-		A[dev 755]:::directory --> A1[system 755]:::directory
-		A --> A2[packages 755]:::directory
-		A --> A3[templates 755]:::directory
-		A --> A4[config 750]:::directory
-		A --> A5(index.php 644):::finished
-		A --> A6(README.md 644):::finished
-		A --> A7[docs 755]:::directory
+	A[fract2-development 755]:::directory --> B(LICENSE.md 644):::finished
+	A --> C(README.md 644):::finished
+	A --> D[config 755]:::directory
+	A --> E[distribution 755]:::directory
+	A --> F[docs 755]:::directory
+	A --> G(fract2-dist-packager.sh 755):::script
+	A --> H(index.php 644)
+	A --> I[packages 755]:::directory
+	A --> J[system 755]:::directory
+	A --> K[templates 755]:::directory
 
-		A1 --> A1A[core 755]:::directory
-		A1A --> A1A1[database 755]:::directory
-		A1A1 --> A1A1A[postgres 755]:::directory
-		A1A1 --> A1A1B[mariadb 755]:::directory
-		A1A1A --> A1A1A1(PostgresConnection.php 644):::finished
-		A1A1A --> A1A1A2(PostgresQuery.php 644):::finished
-		A1A1B --> A1A1B1(MariaDBConnection.php 644):::finished
-		A1A1B --> A1A1B2(MariaDBQuery.php 644):::finished
+	D --> D1(config.yaml 644)
+	D --> D2(database.yaml 644):::finished
 
-		A1 --> A1B[bootstrap 755]:::directory
-		A1B --> A1B1(TarStreamWrapper.php 644):::finished
-		A1B --> A1B2(Cache.php 644):::finished
-		A1B --> A1B3(Logger.php 644):::finished
+	E --> E1(fract2-setup.sh 755):::script
 
-		A7 --> A7A(architecture_overview.md 644):::finished
-		A7 --> A7B(database_design.md 644):::finished
-		A7 --> A7C(installation_process.md 644):::finished
-		A7 --> A7D(package_structure.md 644):::finished
-		A7 --> A7E(security_considerations.md 644):::finished
-		A7 --> A7F(fract2_file_structure.md 644):::finished
-	end
+	F --> F1(architecture_overview.md 644):::finished
+	F --> F2(database_design.md 644):::finished
+	F --> F3(fract2-file-structure.mermaid 644):::finished
+	F --> F4(fract2_file_structure.md 644):::finished
+	F --> F5(installation_process.md 644):::finished
+	F --> F6(package_structure.md 644):::finished
+	F --> F7(security_considerations.md 644):::finished
 
-	subgraph Distribution [fract2-installer/dist 755]
-		B[dist 755]:::directory --> B1[system 755]:::directory
-		B --> B2[packages 755]:::directory
-		B --> B3[templates 755]:::directory
-		B --> B4[config 750]:::directory
-		B --> B5(index.php 644):::finished
-		B --> B6(README.md 644):::finished
-		B --> B7[docs 755]:::directory
+	I --> I1[f2.atom.tar 755]:::directory
+	I --> I2[f2.content.tar 755]:::directory
+	I --> I3[f2.users.tar 755]:::directory
 
-		B1 --> B1A(core.tar 644):::archive
-		B1 --> B1B[bootstrap 755]:::directory
-		B1B --> B1B1(TarStreamWrapper.php 644):::finished
-		B1B --> B1B2(Cache.php 644):::finished
-		B1B --> B1B3(Logger.php 644):::finished
+	J --> J1[bootstrap 755]:::directory
+	J --> J2[core.tar 755]:::directory
+	J1 --> J1A(tarStreamWrapper.php 644):::finished
 
-		B7 --> B7A(architecture_overview.md 644):::finished
-		B7 --> B7B(database_design.md 644):::finished
-		B7 --> B7C(installation_process.md 644):::finished
-		B7 --> B7D(package_structure.md 644):::finished
-		B7 --> B7E(security_considerations.md 644):::finished
-		B7 --> B7F(fract2_file_structure.md 644):::finished
-	end
+	J2 --> J2A[database 755]:::directory
+	J2A --> J2A1[mariadb 755]:::directory
+	J2A --> J2A2[postgres 755]:::directory
+	J2A1 --> J2A1A(MariaDBConnection.php 644):::finished
+	J2A1 --> J2A1B(MariaDBQuery.php 644):::finished
+	J2A2 --> J2A2A(PostgresConnection.php 644):::finished
+	J2A2 --> J2A2B(PostgresQuery.php 644):::finished
 
-	subgraph Installation [fract2 755]
-		C[fract2 755]:::directory --> C1[system 755]:::directory
-		C --> C2[packages 755]:::directory
-		C --> C3[templates 755]:::directory
-		C --> C4[config 750]:::directory
-		C --> C5(index.php 644):::finished
-		C --> C6(README.md 644):::finished
-		C --> C7[docs 755]:::directory
+	K --> K1(index.twig 644)
 
-		C1 --> C1A[core 755]:::directory
-		C1A --> C1A1[database 755]:::directory
-		C1A1 --> C1A1A[postgres 755]:::directory
-		C1A1 --> C1A1B[mariadb 755]:::directory
-		C1A1A --> C1A1A1(PostgresConnection.php 644):::finished
-		C1A1A --> C1A1A2(PostgresQuery.php 644):::finished
-		C1A1B --> C1A1B1(MariaDBConnection.php 644):::finished
-		C1A1B --> C1A1B2(MariaDBQuery.php 644):::finished
+	L[fract2-setup 755]:::directory --> L1(distribution.tar 644):::archive
+	L --> L2(fract2-setup.sh 755):::script
 
-		C7 --> C7A(architecture_overview.md 644):::finished
-		C7 --> C7B(database_design.md 644):::finished
-		C7 --> C7C(installation_process.md 644):::finished
-		C7 --> C7D(package_structure.md 644):::finished
-		C7 --> C7E(security_considerations.md 644):::finished
-		C7 --> C7F(fract2_file_structure.md 644):::finished
-	end
-
-	classDef finished stroke:#90EE90,stroke-width:4px;
 	classDef directory stroke:#FFFF00,stroke-width:4px;
+	classDef finished stroke:#90EE90,stroke-width:4px;
+	classDef script fill:#FFA07A,stroke:#333,stroke-width:2px;
 	classDef archive stroke:#FFA500,stroke-width:4px;
 ```
 
-Diese Struktur ermöglicht eine klare Trennung zwischen Entwicklungs-, Distributions- und Installationsphasen, was die Wartung und Weiterentwicklung des Fract2 CMS erleichtert.
+Diese Struktur ermöglicht eine klare Trennung zwischen Entwicklung, Distribution und Installation des Fract2 CMS.
