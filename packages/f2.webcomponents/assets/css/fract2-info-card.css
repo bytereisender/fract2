@@ -1,0 +1,28 @@
+:host {
+    display: block;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 16px;
+    margin: 16px 0;
+}
+.card-title {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+}
+.card-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 8px;
+}
+.card-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.expand-btn {
+    background: #f0f0f0;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: block;
+}

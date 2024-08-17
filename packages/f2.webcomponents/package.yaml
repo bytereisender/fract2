@@ -1,0 +1,4 @@
+name: f2.webcomponents
+version: 1.0.0
+dependencies:
+  - f2.core: "^2.0"
